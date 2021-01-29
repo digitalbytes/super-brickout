@@ -2,7 +2,7 @@
 
 ![LOGO](images/SuperBRICKOUT.png)
 
-Binary for the TRS-80 Color Computer (CoCo) "Super BRICKOUT" game that I wrote in 6809 assembly when I 15. 
+Binary for the TRS-80 Color Computer (CoCo) "Super BRICKOUT" game that I wrote in 6809 assembly when I was 15. 
 
 Source code to come once I am able to get the code building using lwasm.
 ## Original README
@@ -14,9 +14,12 @@ My original readme documentation that I uploaded along with the `BRICKOUT.BIN` t
     Copyright (C) 1987
     Free Ware 
     
-    SUPER BRICKOUT is an enhanced version of the traditional bustout games. It has blocks that can only be destroyed from the top, side, or bottom. 
+    SUPER BRICKOUT is an enhanced version of the traditional 
+    bustout games. It has blocks that can only be destroyed 
+    from the top, side, or bottom. 
     
-    It also has letters that fall and can be caught with the paddle. These are:
+    It also has letters that fall and can be caught with 
+    the paddle. These are:
     
     [E] expands the paddle
     [P] gains an extra paddle
@@ -27,7 +30,10 @@ My original readme documentation that I uploaded along with the `BRICKOUT.BIN` t
     
     SUPER BRICKOUT is freeware. Send any money to (Owen Stenseth [REDACTED])
     
-    SUPER BRICKOUT is a stand alone program and needs no loader. Just load the program and EXEC to play. Any updates to this program will be sent out to the board as quickly as posible for you.
+    SUPER BRICKOUT is a stand alone program and needs no loader. 
+    Just load the program and EXEC to play. Any updates to this 
+    program will be sent out to the board as quickly as posible 
+    for you.
     
     Thank you kind souls.
 
