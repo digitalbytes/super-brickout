@@ -1,14 +1,20 @@
 # Super BRICKOUT
 
-![LOGO](images/SuperBRICKOUT.png)
+![LOGO](images/SuperBRICKOUT.png =500x)
 
-Binary for the TRS-80 Color Computer (CoCo) "Super BRICKOUT" game that I wrote in 6809 assembly when I was 15. 
+Binary for the TRS-80 Color Computer (CoCo 2) "Super BRICKOUT" game that I wrote in 6809 assembler using EDTASM+ when I was 15. 
 
-Source code to come once I am able to get the code building using lwasm.
+If you want to try it you can run the game in the [JS Mocha](https://www.haplessgenius.com/mocha/) CoCo emulator by downloading [BRICKOUT.BIN](BRICKOUT.BIN) and loading it up.
+
+## Source
+
+Source code to come once I am able to get the code building using lwasm. I am also planning on reviewing the code to understand how it works and updating the code to fix some of the issues I see now. I am also hoping to add an editor that will allow you to design and save your own set of levels.
+
 ## Original README
 
 My original readme documentation that I uploaded along with the `BRICKOUT.BIN` to the bulletin board. Clearly the game was inspired by BUSTOUT (a CoCo Cartridge I had) and [Arkanoid](https://en.wikipedia.org/wiki/Arkanoid) which was released in 1986 and would have been in my local Arcade.
 
+<pre>
     SUPER BRICKOUT 
     BY Owen Stenseth
     Copyright (C) 1987
@@ -36,6 +42,7 @@ My original readme documentation that I uploaded along with the `BRICKOUT.BIN` t
     for you.
     
     Thank you kind souls.
+</pre>
 
 ## Dedication
 
