@@ -8,7 +8,9 @@ If you want to try it you can run the game in the [JS Mocha](https://www.hapless
 
 ## Source
 
-Source code to come once I am able to get the code building using lwasm. I am also planning on reviewing the code to understand how it works and updating the code to fix some of the issues I see now. I am also hoping to add an editor that will allow you to design and save your own set of levels.
+The original source to the game is in src-1987. I have added a makefile and cleaned up the source so that it builds with `lwasm`.
+
+I will be going through the source to try and understand what it is doing. I also intend to make some improvments to the game including a level editor and variable sized levels.
 
 ## Original README
 
