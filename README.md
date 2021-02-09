@@ -1,6 +1,6 @@
 # Super BRICKOUT
 
-![LOGO](images/SuperBRICKOUT.png =500x)
+![LOGO](images/SuperBRICKOUT.png)
 
 Binary for the TRS-80 Color Computer (CoCo 2) "Super BRICKOUT" game that I wrote in 6809 assembler using EDTASM+ when I was 15. 
 
