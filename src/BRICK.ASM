@@ -1,26 +1,37 @@
 	ORG	$5000
-	INCLUDE	PMODE4.ASM
-	INCLUDE	TITPUT.ASM
-	INCLUDE	TOPART.ASM
-	INCLUDE	COPPUT.ASM
-	INCLUDE	NAMPUT.ASM
-	INCLUDE	HIGPUT.ASM
-	INCLUDE	SCOPUT.ASM
-	INCLUDE	BUTPUT.ASM
-	INCLUDE	TOTPUT.ASM
+				; Title Screen Graphics Subroutines
+				; INCLUDED files contain routines
+				; for displaying the graphics at the 
+				; correct place on the screen.
+				;
+	INCLUDE	TITPUT.ASM 	; "SuperB" 
+	INCLUDE	TOTPUT.ASM        ; "RICKOUT"
+	INCLUDE	COPPUT.ASM 	; "Copyright ..."
+	INCLUDE	NAMPUT.ASM 	; "Owen Stenseth"
+	INCLUDE	HIGPUT.ASM 	; "High Score"
+	INCLUDE	SCOPUT.ASM        ; "Score"
+	INCLUDE	BUTPUT.ASM        ; "Press Button On..."
+
+	INCLUDE	TOPART.ASM 	; Gameplay screen top banner
+
+	INCLUDE	PMODE4.ASM 	; Routine to switch to PMODE4
+;
+;  Clear the screen, switch to PMODE4 and draw the title screen. 
+;
 GAME	LDX	#$E00
 	LDD	#$FFFF
 CLEARSCN	STD	,X++
 	CMPX	#$E00+(192*32)
 	BLO	CLEARSCN
 	JSR	PMODE4
-	JSR	TITART
+ 	JSR	TITART
 	JSR	TOTART
 	JSR	COPART
 	JSR	NAMART
 	JSR	HIGART
 	JSR	SCOART
 	JSR	BUTART
+; 	
 	BRA	BUTT
 SCOR2	FDB	0
 	FDB	0
