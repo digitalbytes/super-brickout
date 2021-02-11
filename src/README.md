@@ -14,6 +14,7 @@ Here we will fix up things in the game that may not be working as well as they c
 
 This is when we get to add new features to the game. Some of the things I would like to do include:
 
+ - Demo Mode.
  - Sound.
  - COCO 3 color graphics.
  - Animations.
