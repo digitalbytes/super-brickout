@@ -31,14 +31,21 @@ CLEARSCN	STD	,X++
 	JSR	HIGART
 	JSR	SCOART
 	JSR	BUTART
-; 	
 	BRA	BUTT
-SCOR2	FDB	0
-	FDB	0
-	FDB	0
-	FCB	0
-BUTT	LDY	#$20D3
-	LDX	#INCSCR-1
+
+; Storage for the high score.
+HSCORE	FDB	0
+HSDIGITS	FCB	0,0,0,0,0
+
+; This draws the score to the title screen and 
+; decides if the score is also the new high score.
+; If it is the new high score, copy the score
+; and score digits to the high score.
+
+; Why this is called BUTT I have no idea.
+
+BUTT	LDY	#$20D3		; Position on screen for the score
+	LDX	#INCSCR-1	
 BUT2	LDA	,X
 	JSR	PUTNUM
 	LEAY	-1,Y
@@ -46,10 +53,10 @@ BUT2	LDA	,X
 	CMPX	#SCORE-1
 	BNE	BUT2
 	LDX	SCORE-2
-	CMPX	SCOR2
+	CMPX	HSCORE
 	BLS	BUTT5
 	LDX	#INCSCR-1
-	LDY	#BUTT-1
+	LDY	#HSDIGITS+5
 BUTT3	LDA	,X
 	STA	,Y
 	LEAX	-1,X
@@ -58,21 +65,24 @@ BUTT3	LDA	,X
 	LEAY	-1,Y
 	BRA	BUTT3
 BUTT4	LDX	SCORE-2
-	STX	SCOR2
+	STX	HSCORE
 BUTT5	LDY	#$1DD8
 	LDX	#BUTT-1
 BUT25	LDA	,X
 	JSR	PUTNUM
 	LEAY	-1,Y
 	LEAX	-1,X
-	CMPX	#SCOR2+1
+	CMPX	#HSCORE+1
 	BNE	BUT25
+
+; Wait for user to press the Joystick button
 BUTTON	LDA	$FF00
 	CMPA	#$FC	* Button press on PS4 controller
 *	CMPA	#126	* Is this right? Seems to not work on the emulator.
 	BEQ	PRESS
 	CMPA	#$FE	* Second button on the deluxe joystick?
 	BNE	BUTTON
+
 PRESS	LDX	#$E00
 	LDD	#$FFFF
 CLRSCR	STD	,X++
@@ -98,19 +108,22 @@ BTLINE	STA	,X
 	LEAX	+1,X
 	CMPX	#$E00+(191*32)-1
 	BLO	BTLINE
-	LDX	#TADATA
+
+; Game Start Setup
+	LDX	#TADATA 
 	STX	POINT
 	LDB	#1
-	STB	CATCH
+	STB	CATCH		; Set the ball to be caught on the paddle
 	CLR	PADB+4
 	LDB	#3
-	STB	MEN1
+	STB	MEN1		; Set the players number of paddles to 3
 	LDX	#$600
 	CLR	65280
 	LDD	#0
-	STD	SCORE-2
-	STD	SCORE
-	STD	SCORE+2
-	STB	SCORE+4
+	STD	SCORE-2		; Score stored as a 16 bit number.
+	STD	SCORE 		; Score is stored as 5 digits
+	STD	SCORE+2  	; in separate bytes. This makes for
+	STB	SCORE+4		; easy rollover.
+
 	LBRA	START5
 	INCLUDE	BRICKOUT.ASM
