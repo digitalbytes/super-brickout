@@ -13,6 +13,12 @@ BRICKOUT.DSK: BRICKOUT.BIN
 BRICKOUT.BIN: *.ASM
 	$(LWASM) BRICK.ASM $(LWASMFLAGS) --output=$@
 
+debug: BRICKOUT.DSK
+	mame coco3 -skip_gameinfo $(MAMEFLAGS) \
+		-debug \
+		-flop1 $^ \
+		-autoboot_delay 1 -autoboot_command "\nLOADM\"BRICKOUT.BIN\":EXEC\n"
+
 run: BRICKOUT.DSK
 	mame coco3 -skip_gameinfo $(MAMEFLAGS) \
 		-flop1 $^ \
