@@ -7,12 +7,13 @@
 	FCB	105		
 BRKPOS	FDB	5185		
 TABPOS	RMB	2		
-	RMB	1	
+BRKCOU	RMB	1	
 COU	RMB	1	
 CURLVL	RMB	2		
 MENPOS	FDB	4111		
 	FCB	2
 MEN1	FCB	3
+
 MENDAT	FDB	$C00F
 	FDB	$BFF7
 	FDB	$400B
@@ -25,36 +26,36 @@ MENDAT	FDB	$C00F
 START	LDX	#TADATA+1	; Reset to the first level
 	STX	CURLVL		; Store this as the current level
 	STX	TABPOS		; 
-START2	LDX	BRKPOS		
+START2	LDX	BRKPOS		; Display the current level.
 	LDY	CURLVL		
 	STY	TABPOS
 
-; Draw the 
-	LDY	#7		
-LOOP	LDB	#15		
-	STB	COU-1		
+; Draw the level. 7 rows of 15 bricks.
+	LDY	#7		; Rows to draw
+LOOP	LDB	#15		; Bricks to draw in the row.
+	STB	BRKCOU		
 LOOP1	LDU	TABPOS		
-	LDA	,U+		
+	LDA	,U+		; Get the brick value 
 	STU	TABPOS		
 	LDB	#14		
-	MUL			
-	ADDD	#BRICKDA	
+	MUL			; Determine how far into the sprite table we need to go
+	ADDD	#BRICKDA		; Add that to the start of the sprite table.
 	TFR	D,U		
-	LDB	#7			
+	LDB	#7		; Bricks are 7 scan lines high.	
 	STB	COU		
 LOOP2	LDD	,U		
 	STD	,X		
-	LEAU	+2,U		
-	LEAX	+32,X		
+	LEAU	+2,U		; Bricks are 2 bytes wide.
+	LEAX	+32,X		; Move to the next scan line.
 	DEC	COU		
-	BNE	LOOP2		
+	BNE	LOOP2		; Draw the next scan line.
 	LEAX	-222,X		
-	DEC	COU-1		
-	TST	COU-1		
-	BNE	LOOP1		
+	DEC	BRKCOU		
+	TST	BRKCOU		
+	BNE	LOOP1		; Draw the next brick in the row.	
 	LEAX	+226,X		
 	LEAY	-1,Y		
-	BNE	LOOP		
+	BNE	LOOP		; Draw the next row.	
 
 * Reset the ball position?
 	LDA	#164		
@@ -790,7 +791,7 @@ MISS	BSR	CLRLET
 ; The players score is stored as 16 bit value
 ; and as 5 separate digits to simplify display handling.
 	FDB	0
-SCORE	FCB	0,0,0,0,0
+SCORE	FCB	1,2,3,4,5
 
 ; INCREMENT SCORE 
 ; This routine increments the score by working 
@@ -800,11 +801,12 @@ SCORE	FCB	0,0,0,0,0
 ; place reaches 10. It also increments the 16 bit 
 ; value of the score (presumably used to determine
 ; if the player got a high score)
-INCSCR	LDX	#SCORE+5  	; Start from the 0's place
+INCSCR	LDX	#SCORE+5  	; Start from the 0's place and work backwards.
 SCRLOP	LDA	,X 		; Fetch the digit
-	INCA			; Add 1
+	INCA			; Add 1 to the score.
 	CMPA	#10		; Is it 10
-	BNE	STRSCR		; No? Store and display the digit and end the loop.
+	BNE	STRSCR		; No? Store and display the digit and end the loop leaving
+				; the remaining digits alone.
 	CLRA			; Set the digit to 0 since we rolled over.
 	STA	,X		; Store the digit.
 	BSR	PUTNUM		; Draw the digit.
@@ -813,11 +815,15 @@ SCRLOP	LDA	,X 		; Fetch the digit
 	CMPX	#SCORE-1		; Are we at the last place?
 	BNE	SCRLOP
 STRSCR	STA	,X
-	BSR	PUTNUM
+	BSR	PUTNUM		; 
 	LDD	SCORE-2		; There must be a faster way to
 	ADDD	#1		; increment a 16 bit value by 1
 	STD	SCORE-2		; in memory?
 	RTS
+
+;
+; Put a number to the screen at the position in on the screen in Y.
+;
 PUTNUM	PSHS	X,Y,D		; Save registers on the stack.
 	CMPA	#0		; Are we drawing 0
 	BNE	NUMBE
@@ -829,7 +835,7 @@ NUMBE	DECA			;
 	TFR	D,X
 	LDB	#10		; Height of the number is 10
 NUMB	LDA	,X		; Get the value of the sprite
-	LEAX	+10,X		; Numbers are stored as a sprite graphic of 0123456789 ? 
+	LEAX	+10,X		; Numbers are stored as a sprite graphic of 0123456789?
 	STA	,Y		; Store the byte
 	LEAY	+32,Y		; Move to the next scan line.
 	DECB			; Count down

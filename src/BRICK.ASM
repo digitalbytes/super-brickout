@@ -77,31 +77,37 @@ BUT25	LDA	,X
 
 ; Wait for user to press the Joystick button
 BUTTON	LDA	$FF00
-	CMPA	#$FC	* Button press on PS4 controller
-*	CMPA	#126	* Is this right? Seems to not work on the emulator.
+	CMPA	#$FC	; Button press on PS4 controller
+;	CMPA	#126	; Is this right? Seems to not work on the emulator.
 	BEQ	PRESS
-	CMPA	#$FE	* Second button on the deluxe joystick?
+	CMPA	#$FE	; Second button on the deluxe joystick?
 	BNE	BUTTON
-
+;
+; Clear and display the game screen
+;
 PRESS	LDX	#$E00
 	LDD	#$FFFF
 CLRSCR	STD	,X++
 	CMPX	#$E00+(192*32)
 	BNE	CLRSCR
+; Display the art at the top of the screen.
 	JSR	TOPART
+; Draw the line on the left
 	LDA	#$FC
 	LDX	#$E00+(28*32)
 PULINE	STA	,X 
 	LEAX	+32,X
 	CMPX	#$E00+(192*32)
 	BLO	PULINE
+; Draw the line on the right.
  	LDA	#$3F
  	LDX	#$E00+(28*32)+31
 PULIN1	STA	,X
 	LEAX	+32,X
 	CMPX	#$E00+(192*32)+31
 	BLO	PULIN1
-	CLRA	
+; Draw the line on the bottom
+	CLRA
 	LDX	#$E00+(190*32)+1
 BTLINE	STA	,X
 	STA	+32,X
@@ -125,5 +131,5 @@ BTLINE	STA	,X
 	STD	SCORE+2  	; in separate bytes. This makes for
 	STB	SCORE+4		; easy rollover.
 
-	LBRA	START5
+	LBRA	START5		; Start the game.
 	INCLUDE	BRICKOUT.ASM
